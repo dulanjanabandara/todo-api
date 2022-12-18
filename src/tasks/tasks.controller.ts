@@ -6,6 +6,8 @@ import { AppDataSource } from '../../index';
 export class TaskController {
   constructor(private taskRepository = AppDataSource.getRepository(Task)) {}
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
   public async getAll(): Promise<Task[]> {
     let allTasks: Task[];
 
