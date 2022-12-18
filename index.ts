@@ -1,9 +1,10 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 import cors from 'cors';
 
 import { Task } from './src/tasks/tasks.entity';
+import { taskRouter } from './src/tasks/tasks.router';
 
 const app: Express = express();
 dotenv.config();
@@ -24,18 +25,17 @@ export const AppDataSource = new DataSource({
 
 const port = process.env.PORT || 3200;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TS Server...');
-});
 
 AppDataSource.initialize()
-  .then(() => {
+.then(() => {
     console.log('Database connected successfully...');
 
     app.listen(port, () => {
       console.log(`Server started at port ${port}...`);
     });
-  })
-  .catch((err) => {
+})
+.catch((err) => {
     console.error('Error during data source initialization', err);
-  });
+});
+
+app.use('/', taskRouter);
